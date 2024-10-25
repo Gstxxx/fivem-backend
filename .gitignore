@@ -32,3 +32,5 @@ lerna-debug.log*
 /cache/
 /FXServer/server-data/resources/\[local\]/
 /FXServer/server-data/db/
+
+/prisma/database/
