@@ -1,0 +1,31 @@
+{
+  "name": "fivem-backend",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch index.ts",
+    "build": "tsc && prisma generate && prisma migrate dev --name init",
+    "start": "node dist/index.js",
+    "format": "prettier --write .",
+    "seed": "npx -y tsx seed.ts",
+    "migrate": "npx prisma migrate dev --name init",
+    "fivem" :"cd FXServer && ~/FXServer/run.sh +exec server.cfg"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.2",
+    "@prisma/client": "^5.21.1",
+    "hono": "^4.6.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.0",
+    "prisma": "^5.21.1",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.7.1",
+    "typescript": "^5.6.3"
+  },
+  "version": "1.0.0",
+  "description": "``` npm install npm run dev ```",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,165 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./database/data.db"
+}
+
+model phone_app_chat {
+  id      Int      @id @default(autoincrement())
+  channel String
+  message String
+  time    DateTime @default(now())
+}
+
+model phone_calls {
+  id       Int      @id @default(autoincrement())
+  owner    String
+  num      String
+  incoming Int
+  time     DateTime @default(now())
+  accepts  Int
+}
+
+model phone_messages {
+  id          Int      @id @default(autoincrement())
+  transmitter String
+  receiver    String
+  message     String   @default("0")
+  time        DateTime @default(now())
+  isRead      Int      @default(0)
+  owner       Int      @default(0)
+}
+
+model phone_users_contacts {
+  id         Int     @id @default(autoincrement())
+  identifier String?
+  number     String?
+  display    String  @default("-1")
+}
+
+model twitter_accounts {
+  id         Int     @id @default(autoincrement())
+  username   String  @unique
+  password   String
+  avatar_url String?
+  tweets     twitter_tweets[]
+  likes      twitter_likes[]
+}
+
+model twitter_likes {
+  id       Int              @id @default(autoincrement())
+  author   twitter_accounts @relation(fields: [authorId], references: [id])
+  authorId Int
+  tweet    twitter_tweets   @relation(fields: [tweetId], references: [id], onDelete: Cascade)
+  tweetId  Int
+}
+
+model twitter_tweets {
+  id       Int               @id @default(autoincrement())
+  author   twitter_accounts  @relation(fields: [authorId], references: [id])
+  authorId Int
+  realUser String?
+  message  String
+  time     DateTime          @default(now())
+  likes    Int               @default(0)
+  tweetLikes twitter_likes[]
+}
+
+model vrp_business {
+  user_id          Int   @id
+  capital          Int?
+  laundered        Int?
+  reset_timestamp  Int?
+  user             vrp_users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model vrp_estoque {
+  vehicle    String
+  quantidade Int
+  @@id([vehicle])
+}
+
+model vrp_homes_permissions {
+  owner   Int
+  user_id Int
+  garage  Int
+  home    String @default("")
+  tax     String @default("")
+  @@id([owner, user_id, home])
+}
+
+model vrp_srv_data {
+  dkey   String @id
+  dvalue String?
+}
+
+model vrp_users {
+  id          Int     @id @default(autoincrement())
+  whitelisted Boolean?
+  banned      Boolean?
+  business    vrp_business?
+  user_data   vrp_user_data[]
+  user_homes  vrp_user_homes[]
+  identities  vrp_user_identities?
+  ids         vrp_user_ids[]
+  moneys      vrp_user_moneys?
+  vehicles    vrp_user_vehicles[]
+}
+
+model vrp_user_data {
+  user_id Int
+  dkey    String
+  dvalue  String?
+  user    vrp_users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  @@id([user_id, dkey])
+}
+
+model vrp_user_homes {
+  user_id Int
+  home    String
+  number  Int?
+  user    vrp_users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  @@id([user_id, home])
+}
+
+model vrp_user_identities {
+  user_id      Int     @id
+  registration String?
+  phone        String?
+  firstname    String?
+  name         String?
+  age          Int?
+  foto         String?
+  foragido     Int     @default(0)
+  licensa      Int     @default(0)
+  user         vrp_users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model vrp_user_ids {
+  identifier String  @id
+  user_id    Int?
+  user       vrp_users? @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model vrp_user_moneys {
+  user_id Int     @id
+  wallet  Int?
+  bank    Int?
+  user    vrp_users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model vrp_user_vehicles {
+  user_id Int
+  vehicle String
+  detido  Int     @default(0)
+  time    String  @default("0")
+  engine  Int     @default(1000)
+  body    Int     @default(1000)
+  fuel    Int     @default(100)
+  ipva    String?
+  user    vrp_users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  @@id([user_id, vehicle])
+}
