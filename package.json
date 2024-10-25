@@ -9,7 +9,7 @@
     "seed": "npx -y tsx seed.ts",
     "migrate": "npx prisma migrate dev --name init",
     "fivem" :"bash ~/FXServer/run.sh +exec server.cfg",
-    "arch" : "git clone https://github.com/citizenfx/cfx-server-data.git ~fivem-backend/FXServer/server-data"
+    "arch": "git clone https://github.com/citizenfx/cfx-server-data.git FXServer/server-data"
   },
   "dependencies": {
     "@hono/node-server": "1.13.2",
