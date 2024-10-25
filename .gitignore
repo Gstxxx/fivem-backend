@@ -30,5 +30,5 @@ lerna-debug.log*
 #fivem
 *.cfg
 /cache/
-/FXServer/resources/\[local\]/
-/FXServer/db/
+/FXServer/server-data/resources/\[local\]/
+/FXServer/server-data/db/
