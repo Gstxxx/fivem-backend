@@ -8,7 +8,8 @@
     "format": "prettier --write .",
     "seed": "npx -y tsx seed.ts",
     "migrate": "npx prisma migrate dev --name init",
-    "fivem" :"cd FXServer && ~/FXServer/run.sh +exec server.cfg"
+    "fivem" :"cd FXServer && bash ~/FXServer/run.sh +exec server.cfg",
+    "arch" : "cd FXServer && git clone https://github.com/citizenfx/cfx-server-data.git ~/FXServer/server-data"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.2",
